@@ -69,7 +69,6 @@ export async function getServerSideProps(context) {
 
 
 const Index = ({ data }) => {
-  const zip = (a, b) => a.map((k, i) => [k, b[i]]);
   useEffect(() => {
     data.map((item, index) => {
       console.log(item.id);
@@ -104,39 +103,55 @@ const Index = ({ data }) => {
       </Head>
 
       <main>
-        <h1>
-          Asignaturas
-        </h1>
-        <Box bg="#12345600" borderWidth='4px' overflow='scroll' maxH='450px'>
-          <Accordion>
-            {data.map((item, index) => (
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box flex='1' textAlign='left'>
-                      {item.code} - {item.title}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <VStack {...group} align='stretch'>
-                    {item.grupos.map((value, index) => {
-                      const radio = getRadioProps({ value })
-                      return (
-                        <RadioCard key={value} {...radio}>
-                          {value} - {item.profesores[index]}
-                        </RadioCard>
-                      )
-                    })}
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
+        <Accordion>
+          
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex='1' textAlign='left'>
+                  BAIN087 - Métodos numéricos para ingeniería
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <VStack {...group} align='stretch'>
+                {options.map((value) => {
+                  const radio = getRadioProps({ value })
+                  return (
+                    <RadioCard key={value} {...radio}>
+                      {value}
+                    </RadioCard>
+                  )
+                })}
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
 
-          </Accordion>
-        </Box>
-        
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex='1' textAlign='left'>
+                  BAIN086 - Cálculo en varias variables
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <VStack {...group} align='stretch'>
+                {options.map((value) => {
+                  const radio = getRadioProps({ value })
+                  return (
+                    <RadioCard key={value} {...radio}>
+                      {value}
+                    </RadioCard>
+                  )
+                })}
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
+
+        </Accordion>
       </main>
 
     </div>

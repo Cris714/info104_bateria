@@ -1,0 +1,79 @@
+[
+    {"code": "BAIN087", 
+     "title": "Métodos Numéricos para ingeniería",
+     "grupos": ["Grupo 1", "Grupo 2", "Grupo 3"],
+     "profesores": ["Paulo Alvarez", "Juan Pablo Concha", "Felipe Tauler"]
+    },
+
+    {"code": "BAIN086", 
+     "title": "Cálculo en varias variables",
+     "grupos": ["Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"],
+     "profesores": ["Javier Arriaza", "Juan Pablo Concha", "Marcela Cardoch", "Sergio Argomedo"]
+    },
+
+    {"code": "BAIN085", 
+     "title": "Física: Ondas y Electromagnetismo",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["Pedro Brito", "Sebastian Urrutia"]
+    },
+
+    {"code": "BAIN065", 
+     "title": "Álgebra para ingeniería",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["Tatiana Riquelme", "Javier Arriaza"]
+    },
+
+    {"code": "BAIN067", 
+     "title": "Geometría para ingeniería",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["Sergio Argomedo", "Felipe Tauler"]
+    },
+
+    {"code": "DYRE070", 
+     "title": "Educación física y salud",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["María Eliana de la Maza", "Erick Araya"]
+    },
+
+    {"code": "BAIN071", 
+     "title": "Comunicación idioma español",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["Francisco Coveña", "Cecilia Lagos"]
+    },
+
+    {"code": "BAIN999", 
+     "title": "aoinfioq3wofi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["imkomflwke", "qwlfmqwof"]
+    },
+
+    {"code": "BAIN998", 
+     "title": "aoin21fioq3wofi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["imkomflwkqwfe", "qwlfmqwfqwof"]
+    },
+
+    {"code": "BAIN997", 
+     "title": "aoinfqwfofi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["imo,12lwke", "qwwfkmmqwof"]
+    },
+
+    {"code": "BAIN996", 
+     "title": "aoinwqfqwfi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["imksdgwke", "qsdgmqwof"]
+    },
+
+    {"code": "BAIN995", 
+     "title": "aoigsfi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["imkbblwke", "qbmqwof"]
+    },
+
+    {"code": "BAIN994", 
+     "title": "aoinafvfi",
+     "grupos": ["Grupo 1", "Grupo 2"],
+     "profesores": ["isdmflwke", "qwwwwof"]
+    }
+]
