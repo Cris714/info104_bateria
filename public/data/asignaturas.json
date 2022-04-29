@@ -1,14 +1,26 @@
 [
     {"code": "BAIN087", 
      "title": "Métodos Numéricos para ingeniería",
-     "grupos": ["Grupo 1", "Grupo 2", "Grupo 3"],
-     "profesores": ["Paulo Alvarez", "Juan Pablo Concha", "Felipe Tauler"]
+     "grupos": ["Grupo 1", "Grupo 2", "Grupo 3","Grupo 4","Grupo 5","Grupo 6"],
+     "profesores": ["Juan Rios", "Juan Rios","Paulo Alvarez","Paulo Alvarez", "Juan Pablo Concha","Juan Pablo Concha"],
+     "horario": [
+            [["lun", 1], ["mie", 1],["vie", 1]], //grupo 1
+            [["mar", 2], ["mie", 2],["jue", 1]], //grupo 2
+            [["lun", 1],["mar", 2],["mie", 3]], //grupo 3
+            [["mie",2],["jue",1],["vie", 3]], //grupo 4
+            [["mar",4],["mie",4],["jue", 2]], //grupo 5
+            [["mie",2],["jue",5],["vie", 5]] //grupo 6
+    ]
     },
 
     {"code": "BAIN086", 
      "title": "Cálculo en varias variables",
      "grupos": ["Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"],
-     "profesores": ["Javier Arriaza", "Juan Pablo Concha", "Marcela Cardoch", "Sergio Argomedo"]
+     "profesores": ["Javier Arriaza", "Juan Pablo Concha", "Marcela Cardoch", "Sergio Argomedo"],
+     "horario": [[["lun", 4], ["mar", 5]],
+                    [["mie", 6], ["jue", 1]],
+                    [["lun", 2],["vie", 1]], 
+                    [["mie",3],["jue",4]]]
     },
 
     {"code": "BAIN085", 
