@@ -14,7 +14,7 @@ const Respuesta = () => {
     <div className="container">
       <Head>
         <title>Respuesta</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main>

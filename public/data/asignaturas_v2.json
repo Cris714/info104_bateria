@@ -1,0 +1,150 @@
+{
+    "BAIN087": {
+        "title": "Métodos Numéricos para ingeniería",
+        "shortTitle": "Metodos numericos",
+        "groups": {
+            "1": {
+                "prof": "Juan Rios",
+                "room": "6302",
+                "sch": [["lun", 1],["mie", 1],["vie", 1]]
+            },
+            "2": {
+                "prof": "Juan Rios",
+                "room": "6305",
+                "sch": [["mar", 2],["mie", 2],["jue", 1]]
+            },
+            "3": {
+                "prof": "Paulo Alvarez",
+                "room": "6302",
+                "sch": [["lun", 1],["mar", 2],["mie", 3]]
+            },
+            "4": {
+                "prof": "Paulo Alvarez",
+                "room": "6309",
+                "sch": [["mie", 2],["jue", 1],["vie", 3]]
+            },
+            "5": {
+                "prof": "Juan Pablo Concha",
+                "room": "6305",
+                "sch": [["mar", 4],["mie", 4],["jue", 2]]
+            },
+            "6": {
+                "prof": "Juan Pablo Concha",
+                "room": "6301",
+                "sch": [["mie", 2],["jue", 5],["vie", 5]]
+            }
+        }
+    },
+
+    "BAIN086": {
+        "title": "Cálculo en varias variables",
+        "shortTitle": "Calculo II",
+        "groups": {
+            "1": {
+                "prof": "Javier Arriaza",
+                "room": "6304",
+                "sch": [["lun", 4],["mar", 5]]
+            },
+            "2": {
+                "prof": "Juan Pablo Concha",
+                "room": "6307",
+                "sch": [["mie", 6],["jue", 1]]
+            },
+            "3": {
+                "prof": "Marcela Cardoch",
+                "room": "6309",
+                "sch": [["lun", 2],["vie", 1]]
+            },
+            "4": {
+                "prof": "Sergio Argomedo",
+                "room": "6301",
+                "sch": [["mie", 3],["jue", 4]]
+            }
+        }
+    },
+
+    "BAIN065": {
+        "title": "Algebra para ingeniería",
+        "shortTitle": "Algebra",
+        "groups": {
+            "1": {
+                "prof": "Fredna Riquelme",
+                "room": "6302",
+                "sch": [["lun", 2],["vie", 5]]
+            },
+            "2": {
+                "prof": "Juan Pablo Concha",
+                "room": "6304",
+                "sch": [["mie", 2],["jue", 6]]
+            }
+        }
+    },
+
+    "BAIN067": {
+        "title": "Geometría para ingeniería",
+        "shortTitle": "Geometría",
+        "groups": {
+            "1": {
+                "prof": "Javier Arriaza",
+                "room": "6309",
+                "sch": [["jue", 5],["jue", 6]]
+            },
+            "2": {
+                "prof": "Sergio Argomedo",
+                "room": "6303",
+                "sch": [["lun", 1],["mar", 1]]
+            }
+        }
+    },
+
+    "BAIN069": {
+        "title": "Química para ingeniería",
+        "shortTitle": "Química",
+        "groups": {
+            "1": {
+                "prof": "Marianna Villarroel",
+                "room": "9202",
+                "sch": [["lun", 2],["mar", 2]]
+            },
+            "2": {
+                "prof": "Mathieu Vernier",
+                "room": "Curiñanco",
+                "sch": [["mar", 4],["mie", 1]]
+            }
+        }
+    },
+
+    "BAIN071": {
+        "title": "Comunicación idioma español",
+        "shortTitle": "Español",
+        "groups": {
+            "1": {
+                "prof": "Cecilia Lagos",
+                "room": "7401",
+                "sch": [["vie", 1],["vie", 2]]
+            },
+            "2": {
+                "prof": "Francisco Coveña",
+                "room": "15908",
+                "sch": [["lun", 2],["mar", 6]]
+            }
+        }
+    },
+
+    "BAIN073": {
+        "title": "Álgebra lineal para ingeniería",
+        "shortTitle": "Lineal",
+        "groups": {
+            "1": {
+                "prof": "Javier Arriaza",
+                "room": "6309",
+                "sch": [["vie", 5],["vie", 6]]
+            },
+            "2": {
+                "prof": "Sergio Argomedo",
+                "room": "6303",
+                "sch": [["mie", 3],["jue", 1]]
+            }
+        }
+    }
+}
