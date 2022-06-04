@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React from "react";
 import {
   Accordion,
@@ -84,8 +83,8 @@ class Main extends React.Component{
 
   renderCoursesList(){
     return(
-      <VStack bg="#FFFFFFEE" overflow='scroll' height={460} width={500} boxShadow='lg'>
-        <Accordion width={480}>
+      <VStack className="coursesList">
+        <Accordion width='100%'>
           {Object.entries(this.courses).map(([code, course]) => {
             if(course.isVisible){
               return(
@@ -122,7 +121,7 @@ class Main extends React.Component{
 
   renderSelectedCoursesList(){
     return(
-      <VStack height={250} width={500} overflow='scroll' borderRadius='20' boxShadow='lg' bg="#FFFFFFEE">
+      <VStack className="selectedCoursesList">
         {Object.entries(this.selectedCourses).map(([code, course]) => (
           <HStack spacing={5}>
             <Button width={50} height={6}/>
@@ -158,44 +157,41 @@ class Main extends React.Component{
   render(){  
     return (
       <div className="container">
-        <Head>
-          <title>Horario Bateria</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <main>
-          <VStack width='max'>
-            <HStack width={1800} spacing={30}>
-              <VStack>
+          <HStack height='100%' width='100%' spacing='0px'>
+            <VStack className="coursesLayout">
+              <Text className="text1">
+                Asignaturas
+              </Text>
 
-                <Text fontSize={30}>
-                  Asignaturas
-                </Text>
+              <Divider />
 
-                {this.renderCoursesList()}
+              {this.renderCoursesList()}
 
-                <Button width={500} onClick={this.addToSelectedCourses} boxShadow='lg'>
-                  Seleccionar curso
-                </Button>
+              <Divider />
 
-                <Divider />
+              <Button width='100%' onClick={this.addToSelectedCourses} >
+                Seleccionar curso
+              </Button>
 
-                {this.renderSelectedCoursesList()}
+              <Divider />
 
-              </VStack>
+              {this.renderSelectedCoursesList()}
+
+            </VStack>
                 
+            <Button className="hidePanelButton">||</Button>
 
-              <VStack width={1250}>
+            <VStack className="scheduleLayout">
 
-                <Text fontSize={30}>
-                  Horario
-                </Text>
+              <Text fontSize={30}>
+                Horario
+              </Text>
 
-                {this.renderSchedule()}
+              {this.renderSchedule()}
 
-              </VStack>
-            </HStack>
-          </VStack>
+            </VStack>
+          </HStack>
           
         </main>
 

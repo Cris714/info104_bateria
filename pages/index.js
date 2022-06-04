@@ -1,66 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react'
-  
-  
-const App = () => {
-  
-    
-    const Ref = useRef(null);
-    const [timer, setTimer] = useState('00:00:00');
-  
-    const getTimeRemaining = (e) => {
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / 1000 * 60 * 60) % 24);
-        return {
-            total, hours, minutes, seconds
-        };
-    }
-  
-    const startTimer = (e) => {
-        let { total, hours, minutes, seconds } 
-                    = getTimeRemaining(e);
-        if (total >= 0) {
-            setTimer(
-                (hours > 9 ? hours : '0' + hours) + ':' +
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
-        }
-    }
-  
-    const clearTimer = (e) => {
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            startTimer(e);
-        }, 1000)
-        Ref.current = id;
-    }
-  
-    const getDeadTime = () => {
-        let deadline = new Date();
-        deadline.setSeconds(deadline.getSeconds() + 10);
-        return deadline;
-    }
+import { Button, useDisclosure } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-    useEffect(() => {
-        clearTimer(getDeadTime());
-    }, []);
-  
-    // Another way to call the clearTimer() to start
-    // the countdown is via action event from the
-    // button first we create function to be called
-    // by the button
-    const onClickReset = () => {
-        clearTimer(getDeadTime());
-    }
-  
-    return (
-        <div className="App">
-            <h2>{timer}</h2>
-            <button onClick={onClickReset}>Reset</button>
-        </div>
-    )
+export default function App() {
+  const { getButtonProps, getDisclosureProps, isOpen } = useDisclosure();
+  const [hidden, setHidden] = useState(!isOpen);
+
+  return (
+    <div>
+      <Button {...getButtonProps()}>Toggle</Button>
+      <motion.div
+        {...getDisclosureProps()}
+        hidden={hidden}
+        initial={false}
+        onAnimationStart={() => setHidden(false)}
+        onAnimationComplete={() => setHidden(!isOpen)}
+        animate={{ width: isOpen ? 500 : 0 }}
+        style={{
+          background: "red",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          position: "absolute",
+          right: "0",
+          height: "100vh",
+          top: "0"
+        }}
+      >
+        welcome home
+      </motion.div>
+    </div>
+  );
 }
-  
-export default App;

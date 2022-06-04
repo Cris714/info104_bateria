@@ -135,7 +135,7 @@ function downloadImage(src){
 const DrawerNewActivity = ({onClickSave}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
-
+  
   const flushInputs = () => {
     inputValues.newCode = '';
     inputValues.newName = '';
@@ -161,6 +161,8 @@ const DrawerNewActivity = ({onClickSave}) => {
         placement='right'
         onClose={onClose}
         finalFocusRef={btnRef}
+        closeOnOverlayClick={false}
+        lockFocusAcrossFrames={true}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -851,7 +853,7 @@ class Main extends React.Component{
 
       </div>
     );
-    }
+  }
 };
 
 export default Main;

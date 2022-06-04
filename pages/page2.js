@@ -12,13 +12,68 @@ import {
   HStack,
   VStack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import {AddIcon, CloseIcon} from "@chakra-ui/icons"
 import {instanceOf} from 'prop-types'
 import {withCookies, Cookies} from 'react-cookie' 
+import {motion} from "framer-motion";
+import {useState} from "react";
 
 import data from "/public/data/asignaturas_v2.json"
+
+
+
+function CoursePanel({renderCoursesList, renderSelectedCoursesList, addToSelectedCourses}) {
+  const {getButtonProps, getDisclosureProps, isOpen} = useDisclosure({defaultIsOpen: true});
+  const [hidden, setHidden] = useState(!isOpen);
+
+  return (
+    <>
+    <div>
+      <motion.div
+        {...getDisclosureProps()}
+        hidden={hidden}
+        initial={false}
+        onAnimationStart={() => setHidden(false)}
+        onAnimationComplete={() => setHidden(!isOpen)}
+        animate={{ width: isOpen ? 'fit-content' : 0 }}
+        style={{
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          left: "0",
+          height: "100vh",
+          top: "0",
+          overflow: "scroll"
+        }} 
+      >
+        <VStack className="coursesLayout">
+          <Text className="text1">
+            Asignaturas
+          </Text>
+
+          <Divider />
+
+          {renderCoursesList()}
+
+          <Divider />
+
+          <Button width='100%' onClick={addToSelectedCourses} >
+            Seleccionar curso
+          </Button>
+
+          <Divider />
+
+          {renderSelectedCoursesList()}
+
+        </VStack>
+      </motion.div>
+    </div>
+    <Button className="hidePanelButton" {...getButtonProps()}>||</Button>
+    </>
+  );
+}
 
 
 
@@ -44,6 +99,8 @@ class Main extends React.Component{
 
     // Binding
     this.addToSelectedCourses = this.addToSelectedCourses.bind(this);
+    this.renderCoursesList = this.renderCoursesList.bind(this);
+    this.renderSelectedCoursesList = this.renderSelectedCoursesList.bind(this);
   }
 
   handleSelection(code, groupNum){
@@ -83,8 +140,8 @@ class Main extends React.Component{
 
   renderCoursesList(){
     return(
-      <VStack bg="#FFFFFFEE" overflow='scroll' height={460} width={500} boxShadow='lg'>
-        <Accordion width={480}>
+      <VStack className="coursesList">
+        <Accordion width='100%'>
           {Object.entries(this.courses).map(([code, course]) => {
             if(course.isVisible){
               return(
@@ -121,11 +178,11 @@ class Main extends React.Component{
 
   renderSelectedCoursesList(){
     return(
-      <VStack height={250} width={500} overflow='scroll' borderRadius='20' boxShadow='lg' bg="#FFFFFFEE">
+      <VStack className="selectedCoursesList">
         {Object.entries(this.selectedCourses).map(([code, course]) => (
-          <HStack spacing={5}>
+          <HStack className="selectedCourseLabel" spacing={5}>
             <Button width={50} height={6}/>
-            <Text width={340}> {code} - {this.courses[code].title} </Text>
+            <Text width={340}> {code} - {this.courses[code].shortTitle} </Text>
             <IconButton bg='#EF181640' icon={<CloseIcon/>} onClick={e => this.removeCourse(code, course)}/>
           </HStack>
         ))}
@@ -158,38 +215,23 @@ class Main extends React.Component{
     return (
       <div className="container">
         <main>
-          <VStack width='max'>
-            <HStack width={1800} spacing={30}>
-              <VStack>
-
-                <Text fontSize={30}>
-                  Asignaturas
-                </Text>
-
-                {this.renderCoursesList()}
-
-                <Button width={500} onClick={this.addToSelectedCourses} boxShadow='lg'>
-                  Seleccionar curso
-                </Button>
-
-                <Divider />
-
-                {this.renderSelectedCoursesList()}
-
-              </VStack>
+          <HStack height='100%' width='100%' spacing='0px'>
+            
+            <CoursePanel renderCoursesList={this.renderCoursesList}
+                         renderSelectedCoursesList={this.renderSelectedCoursesList}
+                         addToSelectedCourses={this.addToSelectedCourses}
+            />
                 
+            <VStack className="scheduleLayout">
 
-              <VStack width={1250}>
+              <Text fontSize={30}>
+                Horario
+              </Text>
 
-                <Text fontSize={30}>
-                  Horario
-                </Text>
+              {this.renderSchedule()}
 
-                {this.renderSchedule()}
-
-              </VStack>
-            </HStack>
-          </VStack>
+            </VStack>
+          </HStack>
           
         </main>
 
