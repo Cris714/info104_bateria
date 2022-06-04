@@ -1,33 +1,29 @@
-import { Button, useDisclosure } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { Link } from "@chakra-ui/react";
+import NextLink from "next/link"
+import {useCookies} from 'react-cookie' 
 
-export default function App() {
-  const { getButtonProps, getDisclosureProps, isOpen } = useDisclosure();
-  const [hidden, setHidden] = useState(!isOpen);
 
+const onClickMobile = () => {
+  const [cookies, setCookie] = useCookies(['configs']);
+  setCookie('configs', {hmax: '100px', wmax: '10px'}, { path: '/' });
+}
+
+const onClickDesktop = () => {
+  const [cookies, setCookie] = useCookies(['configs']);
+  setCookie('configs', {hmax: '100px', wmax: '10px'}, { path: '/' });
+}
+
+
+
+export default function Index() {
   return (
     <div>
-      <Button {...getButtonProps()}>Toggle</Button>
-      <motion.div
-        {...getDisclosureProps()}
-        hidden={hidden}
-        initial={false}
-        onAnimationStart={() => setHidden(false)}
-        onAnimationComplete={() => setHidden(!isOpen)}
-        animate={{ width: isOpen ? 500 : 0 }}
-        style={{
-          background: "red",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          position: "absolute",
-          right: "0",
-          height: "100vh",
-          top: "0"
-        }}
-      >
-        welcome home
-      </motion.div>
+      <NextLink href='/page2' passHref>
+        <Link className="mobileLink" fontSize='20px' onClick={onClickMobile}>Horario (formato movil)</Link>
+      </NextLink>
+      <NextLink href='/page2' passHref>
+        <Link className="desktopLink" fontSize='20px' onClick={onClickDesktop}>Horario (formato desktop)</Link>
+      </NextLink>
     </div>
   );
 }

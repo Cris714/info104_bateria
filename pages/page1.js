@@ -637,6 +637,7 @@ class Main extends React.Component{
   }
 
   downloadSchedule(){
+    document.getElementById('schedule')
     htmlToImage.toPng(document.getElementById('schedule'))
       .then(function (dataUrl) {
         downloadImage(dataUrl);

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 
 html,
@@ -33,11 +34,14 @@ body {
     width: 27vw;
     display: flex;
     justify-content: center;
-    padding: 5vh 1vw 5vh 2vw;
+    padding: 0vh 1vw 5vh 2vw;
   }
 
   .scheduleLayout {
     background-color: #d1d1d15e;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     height: 100vh;
     width: inherit;
   }
@@ -66,6 +70,12 @@ body {
     height: 100px;
     width: 5px;
     background-color: aqua;
+    visibility: hidden;
+  }
+
+  Button.accordionButton {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9vw;
   }
 
   .text1 {
@@ -74,6 +84,26 @@ body {
     text-align: center;
   }
 
+  .text2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9vw;
+  }
+
+  .text3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7vw;
+    text-align: center;
+  }
+
+  .text4 {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.2vw;
+  }
+
+  .mobileLink {
+    visibility: hidden;
+    position: absolute;
+  }
 }
 
 
@@ -92,18 +122,29 @@ body {
 
   .coursesLayout {
     background-color: #d1d1d15e;
-    height: 200vh;
+    height: 150vh;
     width: 45vw;
     display: flex;
     justify-content: center;
-    padding: 0vh 5vw 5vh 2vw;
+    padding: 0vh 2vw 5vh 2vw;
     overflow-y: scroll;
+  }
+
+  .schedule {
+    background-color: aquamarine;
+    padding: 10px 30px 20px 30px;
+    height: fit-content;
+    width: fit-content;
   }
 
   .scheduleLayout {
     background-color: #d1d1d15e;
+    display: flex;
+    flex-direction: column;
+    justify-content:stretch;
     height: 100vh;
     width: inherit;
+    overflow-x: scroll;
   }
 
   .coursesList {
@@ -132,10 +173,138 @@ body {
     background-color: aqua;
   }
 
+  Button.accordionButton {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 11px;
+    height: 30px;
+  }
+
   .text1 {
     font-family: 'Dancing Script', cursive;
     font-size: 3.2vw;
     text-align: center;
+  }
+
+  .text2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 13px;
+  }
+
+  .text3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .text4 {
+    font-family: 'Comfortaa', cursive;
+    font-size: 10px;
+  }
+
+  .desktopLink {
+    visibility: hidden;
+    position: absolute;
+  }
+
+}
+
+@media (orientation: portrait) {
+
+  .container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    background-color: #81284121;
+    overflow: hidden;
+  }
+
+  .coursesLayout {
+    background-color: #d1d1d15e;
+    height: 100vh;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    padding: 0vh 2vw 5vh 2vw;
+    overflow-y: scroll;
+  }
+
+  .schedule {
+    background-color: aquamarine;
+    padding: 10px 30px 20px 30px;
+    height: fit-content;
+    width: fit-content;
+  }
+
+  .scheduleLayout {
+    /*background-color: #d1d1d15e;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: inherit;
+    overflow: scroll;
+  }
+
+  .coursesList {
+    background-color: #FFFFFF;
+    height: 40%;
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .selectedCoursesList {
+    background-color: #FFFFFF;
+    height: 40%;
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .selectedCourseLabel {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 5px;
+  }
+
+  Button.hidePanelButton {
+    height: 100px;
+    width: 5px;
+    background-color: aqua;
+  }
+
+  Button.accordionButton {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
+    height: 30px;
+  }
+
+  .text1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.2vh;
+    text-align: center;
+  }
+
+  .text2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 13px;
+  }
+
+  .text3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .text4 {
+    font-family: 'Comfortaa', cursive;
+    font-size: 10px;
+  }
+
+  .desktopLink {
+    visibility: hidden;
+    position: absolute;
   }
 
 }

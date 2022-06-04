@@ -13,6 +13,7 @@ const App = ({ Component, pageProps }) => {
       </Head>
       <CookiesProvider>
         <Component {...pageProps} />
+        
       </CookiesProvider>
     </ChakraProvider>
   );
