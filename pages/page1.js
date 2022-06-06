@@ -84,7 +84,7 @@ var configs = {
   'wmax': '10.5vw', 
   'hori': [7, 0], // [HH, MM]
   'horf': [19, 0], // [HH, MM]
-  'rangeStep': 30, // MM
+  'rangeStep': 60, // MM
   'includeSab': false,
   'includeDom': false,
   'lastDay': new Date('2022-07-15T23:59:59-04:00'),
@@ -282,6 +282,7 @@ const DrawerDaysLeft = () => {
   }
   
   const updateTimer = (e) => {
+    console.log(window.innerHeight)
     let { total, days, hours, minutes, seconds } = getTimeRemaining(e);
       if (total >= 0) {
         setTimer(
@@ -402,7 +403,7 @@ class Main extends React.Component{
     this.userDefinedCourses = {};
 
     // Almacena un grafo para cada dia: {KEY: courseCode, VALUE: {info: [x, y, h, w], links: [...aristas...], group: int}}
-    this.schedule = {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}; 
+    this.schedule = {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}, 'sab':{}, 'dom': {}}; 
     if(configs.includeSab) this.schedule = {...this.schedule, 'sab': {}};
     if(configs.includeDom) this.schedule = {...this.schedule, 'dom': {}};
 

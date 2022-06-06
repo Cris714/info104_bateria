@@ -13,16 +13,23 @@ import {
   VStack,
   Text,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverHeader,
+  SimpleGrid,
 } from "@chakra-ui/react";
 
 import {AddIcon, CloseIcon} from "@chakra-ui/icons"
 import {instanceOf} from 'prop-types'
-import {withCookies, Cookies, useCookies} from 'react-cookie' 
+import {withCookies, Cookies} from 'react-cookie' 
 import {motion} from "framer-motion";
-import {useState} from "react";
+import {useState, useEffect, useRef} from "react";
 
 import data from "/public/data/asignaturas_v2.json"
-
 
 
 
@@ -83,6 +90,52 @@ function splitSize(value){
 }
 
 
+
+const BoxDaysLeft = () => {
+  const Ref = useRef(null);
+  const [timer, setTimer] = useState('0 días 0 horas 0 minutos 0 segundos');
+  
+  const getTimeRemaining = (e) => {
+    const total = Date.parse(e) - Date.parse(new Date());
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+    const days = Math.floor((total / 1000 / 60 / 60 / 24));
+    return {
+        total, days, hours, minutes, seconds
+    };
+  }
+  
+  const updateTimer = (e) => {
+    console.log(window.innerHeight)
+    let { total, days, hours, minutes, seconds } = getTimeRemaining(e);
+      if (total >= 0) {
+        setTimer(
+          days + ' días ' + hours + ' horas ' + minutes + ' minutos ' + seconds + ' segundos'
+        )
+    }
+  }
+  
+  const startTimer = (e) => {
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => {
+      updateTimer(e);
+    }, 1000)
+    Ref.current = id;
+  }
+  
+
+  useEffect(() => {
+    startTimer(configs.lastDay);
+  }, []);
+ 
+  return (
+    <Box className="counterBox">
+      <Text className="text4" fontSize='2vmax'>{timer}</Text> 
+    </Box>
+  )
+}
+
 function CoursePanel({renderCoursesList, renderSelectedCoursesList, addToSelectedCourses}) {
   const {getButtonProps, getDisclosureProps, isOpen} = useDisclosure({defaultIsOpen: true});
   const [hidden, setHidden] = useState(!isOpen);
@@ -128,12 +181,28 @@ function CoursePanel({renderCoursesList, renderSelectedCoursesList, addToSelecte
         </VStack>
       </motion.div>
     </div>
-    <Button className="hidePanelButton" {...getButtonProps()}>||</Button>
+    <Box height='100vh' width='fit-content' bg='#d1d1d15e' display='flex' flexDirection='column' justifyContent='center'>
+      <Button className="hidePanelButton" {...getButtonProps()}>||</Button>
+    </Box>
     </>
   );
 }
 
+const ScheduleWindowSizeInitializer = ({autoReloadFunc}) => {
+  const setScheduleSize = (e) => {
+    if(window.innerHeight < 400 || window.innerWidth < 400){
+      configs.hmax = '460px';
+      configs.wmax = '150px';
+      autoReloadFunc();
+    }
+  }
+  
+  useEffect(() => {
+    setScheduleSize(configs.lastDay);
+  }, []);
 
+  return(<></>)
+}
 
 const Card = ({line1, line2, line3, bg, x, y, h, w}) =>{
   return(
@@ -148,7 +217,6 @@ const Card = ({line1, line2, line3, bg, x, y, h, w}) =>{
           justifyContent='center'
           boxShadow='lg'
           spacing='0' 
-          fontSize='1.5vh'
           className='text4'
           >
     {line1 != ''? <Text> {line1} </Text> : <></>}
@@ -173,12 +241,12 @@ const SchRange = ({wmax, hmax, hori, horf}) => {
   let range = [];
   
   for(let i = 0; i < num; i++){
-    range.push([asfmt(asHHMM(Math.round(i*step))), i*ystep-1]);
+    range.push([asfmt(asHHMM(Math.round(i*step))), i*ystep-(hUnit=='px'? 9 : 1.5)]);
   }
   
   return(
     <VStack>
-      <Box align='center' width='1vw' height='4vh' fontSize='3vh' />
+      <Box className="scheduleFRSeparator" align='center' width='1vw' fontSize='3vh' />
       <Box position='relative' width={wmax.toString()+wUnit} height={hmax.toString()+hUnit}>
         {range.map(([str, y]) => (
           <Text className='text2' position='absolute' right='0vw' top={y.toString()+hUnit}> {str} </Text>
@@ -204,12 +272,13 @@ class Main extends React.Component{
     cookies.set('selected', {}, {path: '/'});
     cookies.set('graph', {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}, {path: '/'});
     cookies.set('colors', {}, {path: '/'});
+    cookies.set('available_colors', [...colorPool], {path: '/'})
     */
 
     this.courses = data;
     this.selectedCourses = cookies.get('selected') || {};
     
-    this.colors = [...colorPool];
+    this.colors = cookies.get('available_colors') || [...colorPool];
     colors = cookies.get('colors') || {};
     console.log(Object.keys(configs))
 
@@ -395,6 +464,7 @@ class Main extends React.Component{
       const { cookies } = this.props;
       cookies.set('selected', this.selectedCourses, {path: '/'});
       cookies.set('graph', this.schedule, {path: '/'});
+      cookies.set('available_colors', this.colors), {path: '/'};
     }
   }
 
@@ -412,12 +482,14 @@ class Main extends React.Component{
     // Quitar de cookies
     const { cookies } = this.props;
     cookies.set('selected', this.selectedCourses, {path: '/'});
+    cookies.set('colors', colors, {path: '/'});
+    cookies.set('available_colors', this.colors, {path: '/'});
   }
 
   renderCoursesList(){
     return(
       <VStack className="coursesList">
-        <Accordion width='100%'>
+        <Accordion width='100%' allowToggle>
           {Object.entries(this.courses).map(([code, course]) => {
             if(course.isVisible){
               return(
@@ -454,13 +526,37 @@ class Main extends React.Component{
   }
 
   renderSelectedCoursesList(){
+    const changeColor = (code, color) => {
+      const { cookies } = this.props;
+      colors[code] = color; 
+      cookies.set('colors', colors, {path: '/'});
+      this.setState({})
+    };
     return(
       <VStack className="selectedCoursesList">
-        {Object.entries(this.selectedCourses).map(([code, course]) => (
+        {Object.entries(this.selectedCourses).map(([code, group]) => (
           <HStack className="selectedCourseLabel" spacing={5}>
-            <Button width={50} height={6}/>
-            <Text  className="text2" width={340}> {code} - {this.courses[code].shortTitle} </Text>
-            <IconButton bg='#EF181640' icon={<CloseIcon/>} onClick={e => this.removeCourse(code, course)}/>
+            <Popover>
+              <PopoverTrigger>
+                <Button bg={colors[code]} width={50} height={6}/>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverHeader> Elige un color </PopoverHeader>
+                <PopoverCloseButton />
+                <PopoverBody>
+                  <SimpleGrid columns={10} spacing='2vh'>
+                    {colorPool.map((color)=>{
+                      return(
+                        <Button bg={color} size='xs' onClick={e=>changeColor(code, color)}/>
+                        )
+                      })}
+                  </SimpleGrid>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            <Text className='text2' width={340}> {code} - {this.courses[code].shortTitle} </Text>
+            <IconButton bg='#EF181640' icon={<CloseIcon/>} onClick={e => this.removeCourse(code, group)}/>
           </HStack>
         ))}
       </VStack>
@@ -471,7 +567,7 @@ class Main extends React.Component{
     const renderDayColumn = (day) => {
       return(
         <VStack>
-          <Box className='text3' width={configs.wmax} height='4vh'> {dayName[day]} </Box>
+          <Box className='scheduleFRSeparator' width={configs.wmax}> {dayName[day]} </Box>
           <Box position='relative' 
                width={configs.wmax} 
                height={configs.hmax} 
@@ -539,6 +635,7 @@ class Main extends React.Component{
     return (
       <div className="container">
         <main>
+          <ScheduleWindowSizeInitializer autoReloadFunc={()=>this.setState({})}/>
           <HStack height='100%' width='100%' spacing='0px'>
             
             <CoursePanel renderCoursesList={this.renderCoursesList}
@@ -548,10 +645,10 @@ class Main extends React.Component{
             
             <Box className="scheduleLayout">
               <VStack className="schedule">
-
+                <Text className="text3"> Horario Primer Semestre 2022 </Text>
                 {this.renderSchedule()}
-
               </VStack>
+              <BoxDaysLeft /> 
             </Box>
           </HStack>
           

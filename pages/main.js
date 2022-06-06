@@ -1,8 +1,4 @@
-//mantener datos:  cookies - local storage
-
-import Head from "next/head";
 import React from "react";
-import {useState} from "react";
 import {
   Accordion,
   AccordionItem,
@@ -12,10 +8,9 @@ import {
   Box,
   Button,
   IconButton,
-  Divider,
-  Grid,
-  GridItem,
-  SimpleGrid,
+  HStack,
+  VStack,
+  Text,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -23,16 +18,55 @@ import {
   PopoverCloseButton,
   PopoverBody,
   PopoverHeader,
-  HStack,
-  VStack,
-  Text,
-  Flex,
-  Input,
+  SimpleGrid,
 } from "@chakra-ui/react";
 
 import {AddIcon, CloseIcon} from "@chakra-ui/icons"
+import {instanceOf} from 'prop-types'
+import {withCookies, Cookies} from 'react-cookie' 
 
-import data from "/public/data/asignaturas.json"
+import _ScheduleSizeInitializer from "../components/_ScheduleSizeInitializer";
+import CoursePanel from "../components/CoursePanel";
+import Schedule from "../components/Schedule";
+import TimeRemaining from "../components/TimeRemaining";
+
+import data from "/public/data/asignaturas_v2.json"
+
+
+
+var block2HHMM = {
+  1: [[8,10], [9,40]],
+  2: [[9,50], [11,20]],
+  3: [[11,30], [13,0]],
+  4: [[14,10], [15,40]],
+  5: [[15,50], [17,20]],
+  6: [[17,30], [19,0]]
+}
+
+var colorPool = ['#d98880', 
+                 '#aab7b8',
+                 '#ff8dfa', 
+                 '#bb8fce', 
+                 '#FF5733', 
+                 '#FFC300', 
+                 '#DAF7A6', 
+                 '#85c1e9', 
+                 '#a3e4d7',
+                 ]
+
+var colors; // {KEY: courseCode, VALUE: color}
+
+var configs = {
+  'hmax': '70vh',
+  'wmax': '11vw',
+  'hori': [7, 0], // [HH, MM]
+  'horf': [19, 0], // [HH, MM]
+  'rangeStep': 60, // MM
+  'includeSab': false,
+  'includeDom': false,
+  'lastDay': new Date('2022-07-15T23:59:59-04:00'),
+}
+
 
 
 function get(object, key, default_value) {
@@ -40,455 +74,346 @@ function get(object, key, default_value) {
   return (typeof result !== "undefined") ? result : default_value;
 }
 
-const HiddenPopover=({style, onClickAdd, setName, dayNBlock})=>{
-  return(
-    <Popover>
-      <PopoverTrigger>
-        <IconButton style={style} icon={<AddIcon/>} size='xs' position='absolute' isRound/>
-      </PopoverTrigger>
-      <PopoverContent style={style}>
-          <PopoverArrow />
-          <PopoverHeader> Añadir manualmente </PopoverHeader>
-          <PopoverCloseButton />
-          <PopoverBody>
-            <Input placeholder="Nombre" onChange={setName} isRequired/>
-            <Input placeholder="Lugar"/>
-            <Button onClick={e=>onClickAdd(dayNBlock)}> Agregar</Button>
-          </PopoverBody>
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-
-const Card=({courses, colors, onClickAdd, setName, dayNBlock})=>{
-  // Tarjeta de curso para el horario
-
-  const [style, setStyle] = useState({display: 'none'});
-
-  if(courses.length == 1){
-    let course = courses[0];
-    return(
-      <Flex justify='right' onMouseEnter={e => {setStyle({display: 'block'})}} onMouseLeave={e => {setStyle({display: 'none'})}}>
-        <HiddenPopover style={style} onClickAdd={onClickAdd} setName={setName} dayNBlock={dayNBlock}/>
-        <SimpleGrid columns={1} width='180px' height='70px'>
-              <VStack bg={get(colors, course.code, "#FFFFFFAA")} 
-                      spacing={0} 
-                      overflow='hidden' 
-                      borderRadius='20' 
-                      justifyContent='center'
-                      boxShadow='lg'
-                      >
-                <Text fontSize='sm'> {course.code} {course.group[0]}{course.group.split(" ")[1]} </Text>
-                <Text fontSize='sm'> {course.title} </Text>
-                <Text fontSize='sm'> {course.classroom} </Text>
-              </VStack>
-        </SimpleGrid>
-      </Flex>
-    );
-  }
-  return(
-    <Flex justify='right' onMouseEnter={e => {setStyle({display: 'block'})}} onMouseLeave={e => {setStyle({display: 'none'})}}>
-      <HiddenPopover style={style} />
-      <SimpleGrid columns={courses.length} width='180px' height='70px'>
-        {courses.map((course) => {
-          return(
-            <VStack bg={colors[course.code]} 
-                      spacing={0} 
-                      overflow='hidden' 
-                      borderRadius='20' 
-                      justifyContent='center'
-                      boxShadow='lg'
-                      >
-              <Text fontSize='sm'> {course.code} </Text>
-              <Text fontSize='sm'> {course.classroom} </Text>
-            </VStack>
-          )
-        })}
-      </SimpleGrid>
-    </Flex>
-  );
-}
-
-
-const EnrolledCourse=({course, colors, colorPool, onClickErase, onClickColor})=>{
-  /*
-  Tarjeta de curso para asignaturas inscritas, contiene un boton para eliminar el curso
-  y otro para cambiar el color
-  */
-  return(
-    <HStack spacing={5}>
-      <Popover>
-        <PopoverTrigger>
-          <Button bg={colors[course.code]} width={50} height={6}/>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverHeader> Elige un color </PopoverHeader>
-          <PopoverCloseButton />
-          <PopoverBody>
-            <SimpleGrid columns={10} spacing={3}>
-              {colorPool.map((color, index)=>{
-                return(
-                  <Button bg={color} size='xs' onClick={e=>onClickColor(course.code, color, index)}/>
-                  )
-                })}
-            </SimpleGrid>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      <Text width={340}> {course.code} - {course.title} </Text>
-      <IconButton bg='#EF181640' onClick={onClickErase} icon={<CloseIcon/>}/>
-    </HStack>
-  )
+function splitSize(value){
+  let num, unit;
+  unit = value.replace((num = parseFloat(value)).toString(), '');
+  return [num, unit];
 }
 
 
 
 class Main extends React.Component{
-  constructor(){
-    super()
-    this.day2num = {'lun': 1, 'mar': 2, 'mie': 3, 'jue': 4, 'vie': 5};
-    this.num2day = {1: 'lun', 2: 'mar', 3: 'mie', 4: 'jue', 5: 'vie'};
-    this.labels = ["Bloque", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-    this.colorPool = ['#d98880', 
-                      '#aab7b8',
-                      '#ff8dfa', 
-                      '#bb8fce', 
-                      '#FF5733', 
-                      '#FFC300', 
-                      '#DAF7A6', 
-                      '#85c1e9', 
-                      '#a3e4d7',
-                    ]
-    this.blocks = [
-      {num: "I", horas: "8:10 - 9:40"},
-      {num: "II", horas: "9:50 - 11:20"},
-      {num: "III", horas: "11:30 - 12:50"},
-      {num: "IV", horas: "14:10 - 15:40"},
-      {num: "V", horas: "15:50 - 17:20"},
-      {num: "VI", horas: "17:30 - 18:50"}
-    ];
-    this.hidden = [];
-    this.colors = {};
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
+  constructor(props){
+    super(props);
+    const {cookies} = props;
+
+    //FLUSH COOKIES
+    /*
+    cookies.set('selected', {}, {path: '/'});
+    cookies.set('graph', {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}, {path: '/'});
+    cookies.set('colors', {}, {path: '/'});
+    cookies.set('available_colors', [...colorPool], {path: '/'})
+    */
+
+    this.courses = data;
+    this.selectedCourses = cookies.get('selected') || {};
+    
+    this.colors = cookies.get('available_colors') || [...colorPool];
+    colors = cookies.get('colors') || {};
+    console.log(Object.keys(configs))
+
+    // Almacena un grafo para cada dia: {KEY: courseCode, VALUE: {info: [x, y, h, w], links: [...aristas...], group: int}}
+    this.schedule = cookies.get('graph') || {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}; 
 
     this.state = {
-      dummy: false,
-      checkboxItemSelected: '',
-      courses: data,
-      tempCourse: null,
-      tempMC: {name:'', room:''},
-      tempCourseSch: [],
-      schMatrix: [],
-      enrolled: [],
-
+      selection: {code: '', num: ''},
     };
 
-    for(let i = 0; i < this.blocks.length+1; i++){
-      let temp = [];
-      for(let j = 0; j < this.labels.length; j++){
-        temp.push([{code:"",group:"",title:"",classroom:""},]);
-      }
-      this.state.schMatrix.push(temp);
+    // Ajustes iniciales
+    Object.keys(this.courses).map((course) => (this.courses[course]["isVisible"] = true));
+    Object.keys(this.selectedCourses).map((course) => (this.courses[course].isVisible = false));
 
-      this.changeColor = this.changeColor.bind(this);
-      this.setManuallyEnrolledName = this.setManuallyEnrolledName.bind(this);
-      this.enrollManually = this.enrollManually.bind(this);
-    }
+    // Binding
+    this.addToSelectedCourses = this.addToSelectedCourses.bind(this);
+    this.renderCoursesList = this.renderCoursesList.bind(this);
+    this.renderSelectedCoursesList = this.renderSelectedCoursesList.bind(this);
   }
 
-  // Setters
-  setManuallyEnrolledName(event){
-    this.state.tempMC.name = event.target.value;
-  }
+  adjustSchedule(code, day){
+    let [wmax, wUnit] = splitSize(configs.wmax);
 
-  // Funciones que manejan cambios
-  handleChange(code, group, title, blocks, cid){
-    let block, len;
-
-    while((block=this.state.tempCourseSch.pop()) != null){
-      len = this.state.schMatrix[block[1]][this.day2num[block[0]]].length;
-      if(len > 1){
-        this.state.schMatrix[block[1]][this.day2num[block[0]]].pop();
-      }
-      else{
-        this.state.schMatrix[block[1]][this.day2num[block[0]]] = [{
-          code: "",
-          group: "",
-          title: "",
-          classroom: ""
-        }]
-      }
-    }
-    
-    if(this.state.tempCourse != null){
-      this.colorPool.push(this.colors[this.state.tempCourse.code]);
-      delete this.colors[this.state.tempCourse.code];
-
-      if(code+group == this.state.tempCourse.code+this.state.tempCourse.group){
-        this.state.tempCourse = null
-        this.setState({checkboxItemSelected: ''})
-        return;
-      }
-    }
-
-    this.state.tempCourse = {code: code, title: title, courseId: cid, group: group};
-    this.colors[code] = this.colorPool.pop();
-
-
-    blocks.map((block) => {
-      if(this.state.schMatrix[block[1]][this.day2num[block[0]]][0].code == ""){
-        this.state.schMatrix[block[1]][this.day2num[block[0]]].pop();
-      }
-      this.state.schMatrix[block[1]][this.day2num[block[0]]].push({
-        code: code,
-        group: group,
-        title: title,
-        classroom: "6302",
-      })
-      this.state.tempCourseSch.push(block);
-    });
-
-    this.setState({checkboxItemSelected: code+group})
-  }
-
-  enrollCourse(){
-    if(this.state.tempCourse != null){
-      this.state.enrolled.push({
-        courseId: this.state.tempCourse.courseId,
-        code: this.state.tempCourse.code,
-        title: this.state.tempCourse.title,
-        horarios: this.state.tempCourseSch,
-        userDefined: false,
-      });
-
-      this.hidden.push(this.state.courses[this.state.tempCourse.courseId]);
-      this.state.courses.splice(this.state.tempCourse.courseId, 1);
-      this.state.tempCourse = null;
-      this.state.tempCourseSch = [];
-    }
-    this.setState({dummy: true});
-  }
-
-  enrollManually(dayNBlock){
-    if(this.state.tempMC.name != ''){
-      this.state.enrolled.push({
-        courseId: -1,
-        code: '',
-        title: this.state.tempMC.name,
-        horarios: [[dayNBlock.day, dayNBlock.block]],
-        userDefined: true,
-      })
-    }
-
-    let len = this.state.schMatrix[dayNBlock.block][this.day2num[dayNBlock.day]].length;
-    if(len > 1){
-      this.state.schMatrix[dayNBlock.block][this.day2num[dayNBlock.day]].push({
-        code: "",
-        group: "",
-        title: this.state.tempMC.name,
-        classroom: ""
-      });
-    }
-    else{
-      this.state.schMatrix[dayNBlock.block][this.day2num[dayNBlock.day]] = [{
-        code: "",
-        group: "",
-        title: this.state.tempMC.name,
-        classroom: ""
-      }]
-    }
-
-    this.setState({dummy: true})
-  }
-
-  removeCourse(courseId, index){
-    let block, len, i;
-
-    while((block=this.state.enrolled[index].horarios.pop()) != null){
-      len = this.state.schMatrix[block[1]][this.day2num[block[0]]].length;
-
-      for(i = 0; i < len; i++){
-        if(this.state.schMatrix[block[1]][this.day2num[block[0]]][i].code == this.state.enrolled[index].code){
-          break;
+    let dayGraph = this.schedule[day];
+    let graph = {}; // subgrafo conexo afectado
+    // consigue el subgrafo conexo afectado completo
+    const getGraph = (cid) => {
+      graph[cid] = true;
+      for(let i = 0; i < dayGraph[cid].links.length; i++){
+        if(!get(graph, dayGraph[cid].links[i], false)){
+          getGraph(dayGraph[cid].links[i]);
         }
       }
-
-      if(len > 1){
-        this.state.schMatrix[block[1]][this.day2num[block[0]]].splice(i, 1);
-      }
-      else{
-        this.state.schMatrix[block[1]][this.day2num[block[0]]] = [{
-          code: "",
-          group: "",
-          title: "",
-          classroom: ""
-        }]
-      }
     }
+    getGraph(code);
 
-    this.colorPool.push(this.colors[this.state.enrolled[index].code]);
-    delete this.colors[this.state.enrolled[index].code];
-    this.state.enrolled.splice(index, 1);
-    this.state.courses.splice(courseId, 0, this.hidden[index]);
-    this.hidden.splice(index, 1);
-    this.setState({dummy: true});
+    let cols = {}; // nueva disposicion de columnas, necesario para obtener nCh y k
+    let k = 0;
+
+    // armado de columnas: nodos que no estan relacionados van en columnas iguales
+    Object.keys(graph).map((cid) => {
+      while(k < 10){
+        // crea nueva columna si no existe
+        if(!get(cols, k, false)){
+          cols[k] = [cid];
+          k = 0;
+          break;
+        }
+        // columna no existe
+        else{
+          let i = 0;
+          // verifica que no haya nodos relacionados a cid
+          for(; i < cols[k].length; i++){
+            if(dayGraph[cid].links.includes(cols[k][i])){
+              break;
+            }
+          }
+          // no hay nodos relacionados con cid, se añade a la columna
+          if(i == cols[k].length){
+            cols[k].push(cid);
+            k = 0;
+            break;
+          }
+          // hay un nodo relacionado: cid debe estar en otra columna
+          else{
+            k++;
+          }
+        }
+      }
+    })
+    
+    let nCh = Object.keys(cols).length;
+    // nuevas variables conseguidas, se actualizan todos los x y w del subgrafo afectado 
+    Object.entries(cols).map(([k, col]) => {
+      col.map((cid) => {
+        this.schedule[day][cid].info[0] = (k * (wmax/nCh)).toString()+wUnit;
+        this.schedule[day][cid].info[3] = (wmax/nCh).toString()+wUnit;
+      })
+    })
   }
 
-  changeColor(courseCode, color, index){
-    this.colorPool.push(this.colors[courseCode]);
-    this.colors[courseCode] = color;
-    this.colorPool.splice(index, 1);
-    this.setState({dummy: true});
+  addToSchedule(code, group, day, HHMMi, HHMMf, userDefined){
+    code = code + '_' + HHMMi[0].toString() + HHMMi[1].toString();
+
+    let [hmax, hUnit] = splitSize(configs.hmax);
+
+    let hori = configs.hori;
+    let horf = configs.horf;
+    const asNum = (HHMM) => (60*(HHMM[0]-hori[0])+HHMM[1]-hori[1]); // conversor: hora -> numerico
+    
+    let range = asNum(horf)
+    // obtencion de variables de posicionamiento
+    let y = hmax / range * asNum(HHMMi);
+    let h = hmax / range * (asNum(HHMMf)-asNum(HHMMi));
+    
+    let collision = []; // aristas del nuevo nodo incluido
+    let dayGraph = this.schedule[day]; // grafo completo del dia
+
+    // obtencion de aristas (colisiones)
+    Object.entries(dayGraph).map(([cid, node]) => {
+      let [ny, ] = splitSize(node.info[1]);
+      let [nh, ] = splitSize(node.info[2]);
+      if((y <= ny+nh && y >= ny) || (y+h >= ny && y+h <= ny+nh) || (y <= ny && y+h >= ny+nh) || (y >= ny && y+h <= ny+nh)){
+        collision.push(cid);
+        this.schedule[day][cid].links.push(code); 
+      }
+    })
+
+    // definicion incompleta del nuevo nodo
+    this.schedule[day][code] = {
+      info: [-1, y.toString()+hUnit, h.toString()+hUnit, -1], 
+      links: collision, 
+      group: group, 
+      userDefined: userDefined,
+      hori: HHMMi,
+      horf: HHMMf
+    }; 
+
+    // Reajusta el nuevo grafo formado
+    this.adjustSchedule(code, day);
+  }
+
+  removeFromSchedule(code, day, HHMMi){
+    code = code + '_' + HHMMi[0].toString() + HHMMi[1].toString();
+    let node = this.schedule[day][code];
+    node.links.map((cid) => {
+      let index = this.schedule[day][cid].links.indexOf(code);
+      this.schedule[day][cid].links.splice(index, 1);
+    })
+
+    node.links.map((cid) => {
+      this.adjustSchedule(cid, day);
+    })
+
+    delete this.schedule[day][code];
+
+    const { cookies } = this.props;
+    cookies.set('graph', this.schedule, {path: '/'});
+  }
+
+  handleSelection(code, groupNum){
+    if(this.state.selection.code+this.state.selection.num != code+groupNum){
+      if(this.state.selection.code != ''){
+        let cid = this.state.selection.code;
+        let cgnum = this.state.selection.num;
+        this.courses[cid].groups[cgnum].sch.map(([day, block]) => {
+          let [HHMMi, _] = block2HHMM[block];
+          this.removeFromSchedule(cid, day, HHMMi);
+        })
+        this.colors.push(colors[cid]);
+        delete colors[cid];
+      }
+      this.courses[code].groups[groupNum].sch.map(([day, block]) => {
+        let [HHMMi, HHMMf] = block2HHMM[block];
+        this.addToSchedule(code, groupNum, day, HHMMi, HHMMf, false);
+      })
+      this.setState({selection: {code: code, num: groupNum}});
+      colors[code] = this.colors.pop();
+      const { cookies } = this.props;
+      cookies.set('colors', colors, {path: '/'});
+    }
+    else{
+      this.setState({selection: {code: '', num: ''}});
+      this.courses[code].groups[groupNum].sch.map(([day, block]) => {
+        let [HHMMi, _] = block2HHMM[block];
+        this.removeFromSchedule(code, day, HHMMi);
+      })
+      this.colors.push(colors[code]);
+      delete colors[code];
+    }
+  }
+
+  addToSelectedCourses(){
+    if(this.state.selection.code != ''){
+      let code = this.state.selection.code;
+      let group = this.state.selection.num;
+
+      this.selectedCourses[code] = group;
+      this.courses[code].isVisible = false;
+
+      this.setState({selection: {code: '', num: ''}});
+
+      // Guardar en cookies
+      const { cookies } = this.props;
+      cookies.set('selected', this.selectedCourses, {path: '/'});
+      cookies.set('graph', this.schedule, {path: '/'});
+      cookies.set('available_colors', this.colors), {path: '/'};
+    }
+  }
+
+  removeCourse(code, groupNum){
+    this.courses[code].isVisible = true;
+    this.colors.push(colors[code]);
+    delete this.selectedCourses[code];
+    delete colors[code];
+    this.courses[code].groups[groupNum].sch.map(([day, block]) => {
+      let [HHMMi, _] = block2HHMM[block];
+      this.removeFromSchedule(code, day, HHMMi);
+    })
+    this.setState({selection: {code: '', num: ''}});
+
+    // Quitar de cookies
+    const { cookies } = this.props;
+    cookies.set('selected', this.selectedCourses, {path: '/'});
+    cookies.set('colors', colors, {path: '/'});
+    cookies.set('available_colors', this.colors, {path: '/'});
   }
 
   renderCoursesList(){
     return(
-      <VStack bg="#FFFFFFEE" overflow='scroll' height={460} width={500} boxShadow='lg'>
-        <Accordion width={480}>
-          {this.state.courses.map((item, cid) => (
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex='1' textAlign='left'>
-                    {item.code} - {item.title}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-                <AccordionPanel pb={4}>
+      <VStack className="coursesList">
+        <Accordion width='100%' allowToggle>
+          {Object.entries(this.courses).map(([code, course]) => {
+            if(course.isVisible){
+              return(
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box className="text2" flex='1' textAlign='left'>
+                        {code} - {course.title}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
                     <VStack direction='row' align='stretch'>
-                      {item.grupos.map((value, index) => {
-                        return (
-                          <Button onClick={e=>{this.handleChange(item.code, value, item.shortTitle, item.horario[index], cid)}}
-                                  justifyContent='left'
-                                  bg={e=>(item.code+value == this.state.checkboxItemSelected? '#a3e4d7': '#85c1e900')}
-                                  size='sm'
-                                  >
-                            {value} - {item.profesores[index]}
-                          </Button>
-                        )
-                      })}
+                      {Object.entries(course.groups).map(([num, group]) => (
+                        <Button className="accordionButton"
+                                justifyContent='left'
+                                size='sm'
+                                onClick={e => this.handleSelection(code, num)}
+                                bg={e=>(code+num == this.state.selection.code+this.state.selection.num? '#a3e4d7': '#85c1e900')}
+                                >
+                          Grupo {num} - {group.prof}
+                        </Button>
+                        ))}
                     </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-          ))}
-
+                  </AccordionPanel>
+                </AccordionItem>
+              )
+            }
+        })}
         </Accordion>
       </VStack>
     )
   }
 
-  renderSchedule(){
-    let templateColumns = 'repeat('+(String)(2*this.labels.length-1)+', 1fr)'
-    return (
-      <Grid templateColumns={templateColumns} alignItems='center' justifyItems='center' rowGap={2}>
-          {this.state.schMatrix.map((row, i) => {
-            return(
-              <>
-                {row.map((item, j) =>{
-                  if(i == 0 && j == 0){
-                    return(
-                      <GridItem colSpan={1}>
-                        <VStack width='100px'>
-                          <Text textAlign='center'>{this.labels[j]}</Text>
-                        </VStack>
-                      </GridItem>
-                    )
-                  }
-                  if(i == 0){
-                    return(
-                      <GridItem colSpan={2}>
-                        <VStack width='120px'>
-                          <Text textAlign='center'>{this.labels[j]}</Text>
-                        </VStack>
-                      </GridItem>
-                    )
-                  }
-                  if(j == 0){
-                    return(
-                      <GridItem colSpan={1}>
-                        <VStack width='100px' spacing='0'>
-                          <Text textAlign='center'>{this.blocks[i-1].num}</Text>
-                          <Text textAlign='center'>{this.blocks[i-1].horas}</Text>
-                        </VStack>
-                      </GridItem>
-                    )
-                  }
-                  return(
-                    <GridItem colSpan={2}>
-                      <Card courses={item} 
-                            colors={this.colors} 
-                            onClickAdd={this.enrollManually}
-                            setName={this.setManuallyEnrolledName}
-                            dayNBlock={{day: this.num2day[j], block: i}}
-                            />
-                    </GridItem>
-                  )
-                })}
-              </>
-            )
-          })}
-        
-      </Grid>
-    );
+  renderSelectedCoursesList(){
+    const changeColor = (code, color) => {
+      const { cookies } = this.props;
+      colors[code] = color; 
+      cookies.set('colors', colors, {path: '/'});
+      this.setState({})
+    };
+    return(
+      <VStack className="selectedCoursesList">
+        {Object.entries(this.selectedCourses).map(([code, group]) => (
+          <HStack className="selectedCourseLabel" spacing={5}>
+            <Popover>
+              <PopoverTrigger>
+                <Button bg={colors[code]} width={50} height={6}/>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverHeader> Elige un color </PopoverHeader>
+                <PopoverCloseButton />
+                <PopoverBody>
+                  <SimpleGrid columns={10} spacing='2vh'>
+                    {colorPool.map((color)=>{
+                      return(
+                        <Button bg={color} size='xs' onClick={e=>changeColor(code, color)}/>
+                        )
+                      })}
+                  </SimpleGrid>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            <Text className='text2' width={340}> {code} - {this.courses[code].shortTitle} </Text>
+            <IconButton bg='#EF181640' icon={<CloseIcon/>} onClick={e => this.removeCourse(code, group)}/>
+          </HStack>
+        ))}
+      </VStack>
+    )
   }
 
   render(){  
     return (
       <div className="container">
-        <Head>
-          <title>Horario Bateria</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <main>
-          <VStack width='max'>
-            <HStack width={1800} spacing={30}>
-              <VStack>
-
-                <Text fontSize={30}>
-                  Asignaturas
-                </Text>
-
-                {this.renderCoursesList()}
-
-                <Button width={500} onClick={e => this.enrollCourse()} boxShadow='lg'>
-                  Seleccionar curso
-                </Button>
-
-                <Divider />
-
-                <VStack height={250} width={500} overflow='scroll' borderRadius='20' boxShadow='lg' bg="#FFFFFFEE">
-                  {this.state.enrolled.map((item, index) => {
-                    return(
-                      <EnrolledCourse course={item} 
-                                      colors={this.colors} 
-                                      colorPool={this.colorPool}
-                                      onClickErase={e=>this.removeCourse(item.courseId, index)}
-                                      onClickColor={this.changeColor}
-                                      />
-                    )
-                  })}
-                </VStack>
-
+          <_ScheduleSizeInitializer configs={configs} autoReloadFunc={()=>this.setState({})}/>
+          <HStack height='100%' width='100%' spacing='0px'>
+            
+            <CoursePanel renderCoursesList={this.renderCoursesList}
+                         renderSelectedCoursesList={this.renderSelectedCoursesList}
+                         addToSelectedCourses={this.addToSelectedCourses}
+            />
+            
+            <Box className="scheduleLayout">
+              <VStack className="schedule">
+                <Text className="text3"> Horario Primer Semestre 2022 </Text>
+                <Schedule 
+                  schedule={this.schedule} 
+                  courses={this.courses} 
+                  userDefinedCourses={this.userDefined} 
+                  configs={configs}
+                  colors={colors}
+                  />
               </VStack>
-                
-
-              <VStack width={1250}>
-
-                <Text fontSize={30}>
-                  Horario
-                </Text>
-
-                {this.renderSchedule()}
-
-                <VStack height={250} width={1200} bg='#12345610' borderWidth='3px'>
-                </VStack>
-
-              </VStack>
-            </HStack>
-          </VStack>
+              <TimeRemaining lastDay={configs.lastDay}/> 
+            </Box>
+          </HStack>
           
         </main>
 
@@ -497,4 +422,4 @@ class Main extends React.Component{
   }
 };
 
-export default Main;
+export default withCookies(Main);

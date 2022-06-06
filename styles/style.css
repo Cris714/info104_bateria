@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 
 html,
@@ -37,13 +38,33 @@ body {
     padding: 0vh 1vw 5vh 2vw;
   }
 
+  .schedule {
+    /*background-color: aquamarine;*/
+    padding: 10px 30px 20px 30px;
+    height: fit-content;
+    width: fit-content;
+  }
+
   .scheduleLayout {
-    background-color: #d1d1d15e;
+    /*background-color: #d1d1d15e;*/
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
     width: inherit;
+  }
+
+  .scheduleFRSeparator {
+    height: 4vmin;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7vw;
+    text-align: center;
+  }
+
+  .counterBox {
+    width: max-content;
+    padding: 10px 0px 10px 30px;
+    align-self: center;
   }
 
   .coursesList {
@@ -90,14 +111,15 @@ body {
   }
 
   .text3 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.7vw;
+    font-family: 'Indie Flower', cursive;
+    font-size: 3.0vw;
     text-align: center;
   }
 
   .text4 {
     font-family: 'Comfortaa', cursive;
-    font-size: 1.2vw;
+    font-size: 0.8vw;
+    font-weight: bold;
   }
 
   .mobileLink {
@@ -131,20 +153,33 @@ body {
   }
 
   .schedule {
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
     padding: 10px 30px 20px 30px;
     height: fit-content;
     width: fit-content;
   }
 
   .scheduleLayout {
-    background-color: #d1d1d15e;
+    /*background-color: #d1d1d15e;*/
     display: flex;
     flex-direction: column;
-    justify-content:stretch;
+    justify-content: right;
     height: 100vh;
     width: inherit;
     overflow-x: scroll;
+  }
+
+  .scheduleFRSeparator {
+    height: 22px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .counterBox {
+    width: max-content;
+    padding: 10px 0px 10px 30px;
+    align-self: center;
   }
 
   .coursesList {
@@ -191,19 +226,15 @@ body {
   }
 
   .text3 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 20px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 27px;
     text-align: center;
   }
 
   .text4 {
     font-family: 'Comfortaa', cursive;
     font-size: 10px;
-  }
-
-  .desktopLink {
-    visibility: hidden;
-    position: absolute;
+    font-weight: bold;
   }
 
 }
@@ -232,7 +263,7 @@ body {
   }
 
   .schedule {
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
     padding: 10px 30px 20px 30px;
     height: fit-content;
     width: fit-content;
@@ -246,6 +277,18 @@ body {
     height: 100vh;
     width: inherit;
     overflow: scroll;
+  }
+
+  .scheduleFRSeparator {
+    height: 22px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .counterBox {
+    width: max-content;
+    padding: 10px 0px 10px 30px;
   }
 
   .coursesList {
@@ -292,14 +335,15 @@ body {
   }
 
   .text3 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 20px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 27px;
     text-align: center;
   }
 
   .text4 {
     font-family: 'Comfortaa', cursive;
     font-size: 10px;
+    font-weight: bold;
   }
 
   .desktopLink {
