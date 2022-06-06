@@ -268,12 +268,12 @@ class Main extends React.Component{
     const {cookies} = props;
 
     //FLUSH COOKIES
-    /*
+    
     cookies.set('selected', {}, {path: '/'});
     cookies.set('graph', {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}, {path: '/'});
     cookies.set('colors', {}, {path: '/'});
     cookies.set('available_colors', [...colorPool], {path: '/'})
-    */
+    
 
     this.courses = data;
     this.selectedCourses = cookies.get('selected') || {};
