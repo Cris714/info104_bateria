@@ -1,81 +1,79 @@
 {
-    "BAIN087": {
-        "title": "Métodos Numéricos para ingeniería",
-        "shortTitle": "Metodos numericos",
-        "groups": {
-            "1": {
-                "prof": "Juan Rios",
-                "room": "6302",
-                "sch": [["lun", 1],["mie", 1],["vie", 1]]
-            },
-            "2": {
-                "prof": "Juan Rios",
-                "room": "6305",
-                "sch": [["mar", 2],["mie", 2],["jue", 1]]
-            },
-            "3": {
-                "prof": "Paulo Alvarez",
-                "room": "6302",
-                "sch": [["lun", 1],["mar", 2],["mie", 3]]
-            },
-            "4": {
-                "prof": "Paulo Alvarez",
-                "room": "6309",
-                "sch": [["mie", 2],["jue", 1],["vie", 3]]
-            },
-            "5": {
-                "prof": "Juan Pablo Concha",
-                "room": "6305",
-                "sch": [["mar", 4],["mie", 4],["jue", 2]]
-            },
-            "6": {
-                "prof": "Juan Pablo Concha",
-                "room": "6301",
-                "sch": [["mie", 2],["jue", 5],["vie", 5]]
-            }
-        }
-    },
-
-    "BAIN086": {
-        "title": "Cálculo en varias variables",
-        "shortTitle": "Calculo II",
-        "groups": {
-            "1": {
-                "prof": "Javier Arriaza",
-                "room": "6304",
-                "sch": [["lun", 4],["mar", 5]]
-            },
-            "2": {
-                "prof": "Juan Pablo Concha",
-                "room": "6307",
-                "sch": [["mie", 6],["jue", 1]]
-            },
-            "3": {
-                "prof": "Marcela Cardoch",
-                "room": "6309",
-                "sch": [["lun", 2],["vie", 1]]
-            },
-            "4": {
-                "prof": "Sergio Argomedo",
-                "room": "6301",
-                "sch": [["mie", 3],["jue", 4]]
-            }
-        }
-    },
+    
 
     "BAIN065": {
         "title": "Algebra para ingeniería",
         "shortTitle": "Algebra",
         "groups": {
             "1": {
-                "prof": "Fredna Riquelme",
-                "room": "6302",
-                "sch": [["lun", 2],["vie", 5]]
+                "prof": "Harold Bustos",
+                "room": "6304",
+                "sch": [["mar", 1],["jue", 1],["vie", 2]]
             },
             "2": {
-                "prof": "Juan Pablo Concha",
+                "prof": "Harold Bustos",
+                "room": "4002",
+                "sch": [["lun", 2],["mie", 1],["jue", 2]]
+            },
+            "3": {
+                "prof": "Juan Herrera",
+                "room": "6301",
+                "sch": [["lun", 2],["mar", 1],["vie", 2]]
+            },
+            "5": {
+                "prof": "Esperanza Casanova",
+                "room": "6306",
+                "sch": [["mar", 1], ["mie", 2], ["vie", 1]]
+            },
+            "6": {
+                "prof": "Esperanza Casanova",
+                "room": "6308",
+                "sch": [["mie", 1],["jue", 1],["vie", 2]]
+            },
+            "7": {
+                "prof": "Esperanza Casanova",
+                "room": "7102",
+                "sch": [["mar", 2],["jue", 2],["vie", 3]]
+            },
+            "8": {
+                "prof": "Harold Bustos",
+                "room": "7101",
+                "sch": [["lun", 1],["mar", 2],["vie", 1]]
+            },
+            "9": {
+                "prof": "Juan Herrera",
+                "room": "6307",
+                "sch": [["lun", 1],["mie", 1],["vie", 1]]
+            },
+            "10": {
+                "prof": "Fredna Riquelme",
+                "room": "7201",
+                "sch": [["lun", 2],["jue", 2],["vie", 2]]
+            },
+            "11": {
+                "prof": "Fredna Riquelme",
+                "room": "7301",
+                "sch": [["mar", 2],["mie", 1],["jue", 1]]
+            },
+            "12": {
+                "prof": "Ana Ruiz",
                 "room": "6304",
-                "sch": [["mie", 2],["jue", 6]]
+                "sch": [["lun", 1],["mie", 1],["jue", 2]]
+            },
+            "13": {
+                "prof": "Ana Ruiz",
+                "room": "6306",
+                "sch": [["lun", 2],["mar", 1],["vie", 2]]
+            },
+            "14": {
+                "prof": "Ana Ruiz",
+                "room": "7101",
+                "sch": [["mie", 2],["jue", 1],["vie", 1]]
+            },
+            "15": {
+                "prof": "Daniel Sánchez",
+                "room": "6301",
+                "sch": [["lun", 1],["mie",1],["jue", 1]]
             }
         }
     },
@@ -85,14 +83,74 @@
         "shortTitle": "Geometría",
         "groups": {
             "1": {
-                "prof": "Javier Arriaza",
+                "prof": "Teresa Castro",
                 "room": "6309",
-                "sch": [["jue", 5],["jue", 6]]
+                "sch": [["mar", 5],["jue", 3],["vie", 1]]
             },
             "2": {
+                "prof": "Teresa Castro",
+                "room": "7201",
+                "sch": [["mar", 1],["jue", 5],["vie", 4]]
+            },
+            "3": {
+                "prof": "Sergio Jara",
+                "room": "7102",
+                "sch": [["lun", 1],["mar", 2],["vie", 1]]
+            },
+            "5": {
+                "prof": "Katherina Molina",
+                "room": "6309",
+                "sch": [["mie", 1],["jue", 1],["vie", 2]]
+            },
+            "6": {
+                "prof": "Elizabeth Rozas",
+                "room": "7202",
+                "sch": [["lun", 1],["mie", 2],["jue", 2]]
+            },
+            "7": {
+                "prof": "Elizabeth Rozas",
+                "room": "6305",
+                "sch": [["mar", 1],["mie", 1],["jue", 1]]
+            },
+            "8": {
+                "prof": "Sergio Jara",
+                "room": "6302",
+                "sch": [["mar", 1],["mie", 1],["jue", 2]]
+            },
+            "9": {
                 "prof": "Sergio Argomedo",
-                "room": "6303",
-                "sch": [["lun", 1],["mar", 1]]
+                "room": "6304",
+                "sch": [["lun", 2],["mar", 2],["jue", 3]]
+            },
+            "10": {
+                "prof": "Sergio Argomedo",
+                "room": "6309",
+                "sch": [["lun", 1],["mie", 1],["vie", 3]]
+            },
+            "11": {
+                "prof": "Sergio Argomedo",
+                "room": "7202",
+                "sch": [["mar", 1],["mie", 2],["vie", 1]]
+            },
+            "12": {
+                "prof": "Marcela Cardoch",
+                "room": "6307",
+                "sch": [["lun", 2],["mie", 2],["jue", 1]]
+            },
+            "13": {
+                "prof": "Marcela Cardoch",
+                "room": "6310",
+                "sch": [["lun", 1],["mar", 2],["jue", 2]]
+            },
+            "14": {
+                "prof": "Katherina Molina",
+                "room": "6306",
+                "sch": [["lun", 1],["mar", 1],["jue", 2]]
+            },
+            "15": {
+                "prof": "Katherina Molina",
+                "room": "6310",
+                "sch": [["lun", 2],["mie", 2],["vie", 1]]
             }
         }
     },
@@ -102,14 +160,106 @@
         "shortTitle": "Química",
         "groups": {
             "1": {
-                "prof": "Marianna Villarroel",
-                "room": "9202",
-                "sch": [["lun", 2],["mar", 2]]
+                "prof": "Iturra Lara Maria",
+                "room": "6304",
+                "sch": [["lun", 3],["jue", 4]]
             },
             "2": {
-                "prof": "Mathieu Vernier",
-                "room": "Curiñanco",
-                "sch": [["mar", 4],["mie", 1]]
+                "prof": "Iturra Lara Maria",
+                "room": "6309",
+                "sch": [["mar", 4],["jue", 1]]
+            },
+            "3": {
+                "prof": "Iturra Lara Maria",
+                "room": "6304",
+                "sch": [["lun", 4],["mar", 5]]
+            },
+            "4": {
+                "prof": "Ruiz-Tagle Correa Patricio",
+                "room": "6303",
+                "sch": [["mar", 4],["jue", 4]]
+            },
+            "5": {
+                "prof": "Alegria Aguirre Luz",
+                "room": "6306",
+                "sch": [["mar", 3],["vie", 5]]
+            },
+            "6": {
+                "prof": "Alegria Aguirre Luz",
+                "room": "6309",
+                "sch": [["mie", 3],["vie", 4]]
+            },
+            "7": {
+                "prof": "Alegria Aguirre Luz",
+                "room": "6310",
+                "sch": [["mar", 4],["jue", 5]]
+            },
+            "8": {
+                "prof": "Alegria Aguirre Luz",
+                "room": "6308",
+                "sch": [["mie", 4],["jue", 4]]
+            },
+            "9": {
+                "prof": "Ruiz-Tagle Correa Patricio",
+                "room": "6301",
+                "sch": [["lun", 4],["mie", 3]]
+            },
+            "10": {
+                "prof": "Ruiz-Tagle Correa Patricio",
+                "room": "6307",
+                "sch": [["mar", 3],["vie", 5]]
+            },
+            "11": {
+                "prof": "Ruiz-Tagle Correa Patricio",
+                "room": "6306",
+                "sch": [["lun", 3],["vie", 3]]
+            },
+            "12": {
+                "prof": "Ruiz-Tagle Correa Patricio",
+                "room": "6301",
+                "sch": [["mie", 1],["vie", 4]]
+            }
+        }
+    },
+
+    "DYRE070": {
+        "title": "Educación Física y Salud",
+        "shortTitle": "Dyre",
+        "groups": {
+            "1": {
+                "prof": "Sebastián Cárdenas",
+                "room": "Gimnasio Miraflores",
+                "sch": [["lun", 2],["vie", 4]]
+            },
+            "2": {
+                "prof": "Sebastián Cárdenas",
+                "room": "Gimnasio Miraflores",
+                "sch": [["jue", 6],["vie", 2]]
+            },
+            "3": {
+                "prof": "Fernando Mera",
+                "room": "Gimnasio Miraflores",
+                "sch": [["lun", 3],["jue", 1]]
+            },
+            "4": {
+                "prof": "Fernando Mera",
+                "room": "Gimnasio Miraflores",
+                "sch": [["lun", 4], ["mie", 1]]
+            },
+            "5": {
+                "prof": "Fernando Mera",
+                "room": "Gimnasio Miraflores",
+                "sch": [["mar", 2],["vie", 1]]
+            },
+            "6": {
+                "prof": "Sebastián Cárdenas",
+                "room": "Gimnasio Miraflores",
+                "sch": [["mar", 4],["jue", 4]]
+            },
+            "7": {
+                "prof": "Sebastián Cárdenas",
+                "room": "Gimnasio Miraflores",
+                "sch": [["mar", 1],["mier", 4]]
             }
         }
     },
@@ -144,6 +294,142 @@
                 "prof": "Sergio Argomedo",
                 "room": "6303",
                 "sch": [["mie", 3],["jue", 1]]
+            }
+        }
+    },
+
+    "BAIN079": {
+        "title": "Comunicación: Idioma Inglés",
+        "shortTitle": "Inglés",
+        "groups": {
+            "1": {
+                "prof": "Patricio Arnaldi",
+                "room": "4002",
+                "sch": [["mie", 4],["vie", 3]]
+            },
+            "2": {
+                "prof": "Laura Villaroel",
+                "room": "4002",
+                "sch": [["mar", 3],["vie", 3]]
+            },
+            "3": {
+                "prof": "Aurora Sambolín",
+                "room": "7201",
+                "sch": [["lun", 4],["vie", 4]]
+            },
+            "4": {
+                "prof": "Sergio Cisterna",
+                "room": "7102",
+                "sch": [["mie", 4],["vie", 4]]
+            },
+            "5": {
+                "prof": "Sergio Cisterna",
+                "room": "4002",
+                "sch": [["lun", 3],["jue", 4]]
+            },
+            "6": {
+                "prof": "Daphne Paredes",
+                "room": "7202",
+                "sch": [["mie", 4],["jue", 5]]
+            },
+            "7": {
+                "prof": "Daphne Paredes",
+                "room": "4002",
+                "sch": [["jue", 3], ["vie", 5]]
+            },
+            "8": {
+                "prof": "Margarita Villalón",
+                "room": "4001",
+                "sch": [["jue", 4],["vie", 5]]
+            },
+            "9": {
+                "prof": "Margarita Villalón",
+                "room": "7101",
+                "sch": [["mie", 4],["vie", 3]]
+            },
+            "10": {
+                "prof": "Laura Villaroel",
+                "room": "4001",
+                "sch": [["lun", 3],["vie", 2]]
+            },
+            "11": {
+                "prof": "Laura Villaroel",
+                "room": "7202",
+                "sch": [["mie", 3], ["vie", 4]]
+            },
+            "12": {
+                "prof": "Charles Sienkiewicz",
+                "room": "7302",
+                "sch": [["mar", 4],["jue", 3]]
+            },
+            "13": {
+                "prof": "Charles Sienkiewicz",
+                "room": "7302",
+                "sch": [["mie", 3],["jue", 5]]
+            }
+        }
+    },
+
+    "BAIN086": {
+        "title": "Cálculo en varias variables",
+        "shortTitle": "Calculo II",
+        "groups": {
+            "1": {
+                "prof": "Javier Arriaza",
+                "room": "6304",
+                "sch": [["lun", 4],["mar", 5]]
+            },
+            "2": {
+                "prof": "Juan Pablo Concha",
+                "room": "6307",
+                "sch": [["mie", 6],["jue", 1]]
+            },
+            "3": {
+                "prof": "Marcela Cardoch",
+                "room": "6309",
+                "sch": [["lun", 2],["vie", 1]]
+            },
+            "4": {
+                "prof": "Sergio Argomedo",
+                "room": "6301",
+                "sch": [["mie", 3],["jue", 4]]
+            }
+        }
+    },
+
+    "BAIN087": {
+        "title": "Métodos Numéricos para ingeniería",
+        "shortTitle": "Metodos numericos",
+        "groups": {
+            "1": {
+                "prof": "Juan Rios",
+                "room": "6302",
+                "sch": [["lun", 1],["mie", 1],["vie", 1]]
+            },
+            "2": {
+                "prof": "Juan Rios",
+                "room": "6305",
+                "sch": [["mar", 2],["mie", 2],["jue", 1]]
+            },
+            "3": {
+                "prof": "Paulo Alvarez",
+                "room": "6302",
+                "sch": [["lun", 1],["mar", 2],["mie", 3]]
+            },
+            "4": {
+                "prof": "Paulo Alvarez",
+                "room": "6309",
+                "sch": [["mie", 2],["jue", 1],["vie", 3]]
+            },
+            "5": {
+                "prof": "Juan Pablo Concha",
+                "room": "6305",
+                "sch": [["mar", 4],["mie", 4],["jue", 2]]
+            },
+            "6": {
+                "prof": "Juan Pablo Concha",
+                "room": "6301",
+                "sch": [["mie", 2],["jue", 5],["vie", 5]]
             }
         }
     }
