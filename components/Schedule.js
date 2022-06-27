@@ -58,6 +58,8 @@ const Schedule = ({schedule, courses, userDefinedCourses, configs, colors}) => {
                       y={y} 
                       w={w} 
                       h={h}
+                      hori={node.hori}
+                      horf={node.horf}
                       />
                       )
                     }

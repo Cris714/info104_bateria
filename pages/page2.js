@@ -272,7 +272,9 @@ class Main extends React.Component{
     cookies.set('selected', {}, {path: '/'});
     cookies.set('graph', {'lun':{}, 'mar':{}, 'mie':{}, 'jue':{}, 'vie':{}}, {path: '/'});
     cookies.set('colors', {}, {path: '/'});
-    cookies.set('available_colors', [...colorPool], {path: '/'})
+    cookies.set('available_colors', [...colorPool], {path: '/'});
+    cookies.set('user_defined', {}, {path: '/'});
+    cookies.set('id_count', 0, {path: '/'});
     
 
     this.courses = data;
