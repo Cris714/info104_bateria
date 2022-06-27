@@ -62,7 +62,7 @@ const DrawerNewActivity = ({onClickSave, inputs, misc, configs}) => {
   }
 
   const saveSelectValue = (value, id) =>{
-    inputs[id] = value;
+    inputs.newDay = document.getElementById('selected_day').value;
   }
 
   return (
@@ -90,12 +90,12 @@ const DrawerNewActivity = ({onClickSave, inputs, misc, configs}) => {
             <Input placeholder='Lugar (opcional)' defaultValue={inputs.newRoom} onChange={(e)=>saveInputValue(e, 'newRoom')}/>
             <Divider />
             <Text> Día </Text>
-            <Select >
-              <option onClick={(e)=>saveSelectValue('lun', 'newDay')}>Lunes</option>
-              <option onClick={(e)=>saveSelectValue('mar', 'newDay')}>Martes</option>
-              <option onClick={(e)=>saveSelectValue('mie', 'newDay')}>Miercoles</option>
-              <option onClick={(e)=>saveSelectValue('jue', 'newDay')}>Jueves</option>
-              <option onClick={(e)=>saveSelectValue('vie', 'newDay')}>Viernes</option>
+            <Select id="selected_day" onChange={saveSelectValue}>
+              <option value='lun'>Lunes</option>
+              <option value='mar'>Martes</option>
+              <option value='mie'>Miercoles</option>
+              <option value='jue'>Jueves</option>
+              <option value='vie'>Viernes</option>
             </Select>
             <Divider />
             <Text> Hora de inicio </Text>
