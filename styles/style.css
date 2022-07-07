@@ -93,7 +93,6 @@ body {
   Button.hidePanelButton {
     height: 100px;
     width: 5px;
-    background-color: aqua;
     visibility: hidden;
   }
 
@@ -208,7 +207,6 @@ body {
   Button.hidePanelButton {
     height: 100px;
     width: 5px;
-    background-color: aqua;
   }
 
   Button.accordionButton {
@@ -317,7 +315,6 @@ body {
   Button.hidePanelButton {
     height: 100px;
     width: 5px;
-    background-color: aqua;
   }
 
   Button.accordionButton {

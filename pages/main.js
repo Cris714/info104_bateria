@@ -454,6 +454,13 @@ class Main extends React.Component{
       cookies.set('colors', colors, {path: '/'});
       this.setState({})
     };
+    if((Object.keys(this.selectedCourses).length == 0) && (Object.keys(this.userDefinedCourses).length == 0)){
+      return(
+        <VStack className="selectedCoursesList">  
+          <Text className="text2" paddingY={3}> Cursos Seleccionados </Text>
+        </VStack>
+      )
+    }
     return(
       <VStack className="selectedCoursesList">
         {Object.entries(this.selectedCourses).map(([code, group]) => (

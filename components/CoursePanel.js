@@ -67,7 +67,7 @@ const DrawerNewActivity = ({onClickSave, inputs, misc, configs}) => {
 
   return (
     <>
-      <IconButton width='15%' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AddIcon/>}/>
+      <IconButton width='15%' ref={btnRef} bg="#C2F8C3D0" onClick={onOpen} icon={<AddIcon/>}/>
       <Drawer
         isOpen={isOpen}
         placement='right'
@@ -212,7 +212,7 @@ function CoursePanel({renderCoursesList, renderSelectedCoursesList, addToSelecte
               Seleccionar curso
           </Button>
           <DrawerNewActivity onClickSave={addUserDefined} inputs={inputs} misc={misc} configs={configs}/>
-          <IconButton width='15%' onClick={downloader} icon={<DownloadIcon/>} />
+          <IconButton width='15%' bg="#C2C3F8D0" onClick={downloader} icon={<DownloadIcon/>} />
         </HStack>
 
         <Divider />
@@ -223,7 +223,7 @@ function CoursePanel({renderCoursesList, renderSelectedCoursesList, addToSelecte
       </motion.div>
       </div>
       <Box height='100vh' width='fit-content' bg='#d1d1d15e' display='flex' flexDirection='column' justifyContent='center'>
-      <Button className="hidePanelButton" {...getButtonProps()}>||</Button>
+        <Button className="hidePanelButton" {...getButtonProps()}>||</Button>
       </Box>
     </>
   );
